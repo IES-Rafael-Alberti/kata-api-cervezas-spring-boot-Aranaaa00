@@ -1,0 +1,246 @@
+### ============================================================
+### PETICIONES REST - BEER API CRUD
+### ============================================================
+### Para usar con VS Code REST Client Extension
+### Descarga: https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+###
+### Keybinding: Ctrl+Alt+R (Windows) o Cmd+Alt+R (Mac)
+### O haz click en "Send Request"
+### ============================================================
+
+@host = http://localhost:8080
+@contentType = application/json
+
+### ============================================================
+### 1. CREATE - CREAR CERVEZAS
+### ============================================================
+
+### 1.1 Crear Cerveza 1 - Mahou (básica)
+POST {{host}}/beer HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "Mahou",
+  "abv": 5.1,
+  "style": "Lager"
+}
+
+### 1.2 Crear Cerveza 2 - San Miguel (completa)
+POST {{host}}/beer HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "San Miguel",
+  "description": "Cerveza premium de origen español",
+  "abv": 4.5,
+  "style": "Pilsen",
+  "category": "Premium",
+  "country": "España",
+  "ibu": 20,
+  "price": 2.30
+}
+
+### 1.3 Crear Cerveza 3 - Estrella Damm
+POST {{host}}/beer HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "Estrella Damm",
+  "description": "Cerveza Damm desde 1876",
+  "abv": 4.6,
+  "style": "Pilsen",
+  "category": "Premium",
+  "country": "España",
+  "ibu": 22,
+  "price": 2.40
+}
+
+### 1.4 Crear Cerveza 4 - Guinness
+POST {{host}}/beer HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "Guinness",
+  "description": "Irish Stout clásica",
+  "abv": 4.2,
+  "style": "Stout",
+  "category": "Dark",
+  "country": "Irlanda",
+  "ibu": 45,
+  "price": 3.50
+}
+
+### 1.5 Crear Cerveza 5 - Corona
+POST {{host}}/beer HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "Corona",
+  "description": "Cerveza mejicana clara",
+  "abv": 4.6,
+  "style": "Lager",
+  "category": "Estándar",
+  "country": "México",
+  "ibu": 18,
+  "price": 2.80
+}
+
+### 1.6 Crear Cerveza - ERROR: Sin campo requerido
+POST {{host}}/beer HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "Cerveza Inválida",
+  "style": "Lager"
+}
+
+### ============================================================
+### 2. READ - OBTENER CERVEZAS
+### ============================================================
+
+### 2.1 Obtener todas las cervezas
+GET {{host}}/beer HTTP/1.1
+
+### 2.2 Obtener cerveza por ID (ID: 1)
+GET {{host}}/beer/1 HTTP/1.1
+
+### 2.3 Obtener cerveza por ID (ID: 2)
+GET {{host}}/beer/2 HTTP/1.1
+
+### 2.4 Obtener cerveza por ID (ID: 3)
+GET {{host}}/beer/3 HTTP/1.1
+
+### 2.5 Obtener cerveza inexistente
+GET {{host}}/beer/999 HTTP/1.1
+
+### 2.6 Buscar cerveza por nombre - "mah"
+GET {{host}}/beer/search?name=mah HTTP/1.1
+
+### 2.7 Buscar cerveza por nombre - "a" (multiple results)
+GET {{host}}/beer/search?name=a HTTP/1.1
+
+### 2.8 Filtrar cervezas por estilo - Lager
+GET {{host}}/beer/filter/style?style=Lager HTTP/1.1
+
+### 2.9 Filtrar cervezas por estilo - Stout
+GET {{host}}/beer/filter/style?style=Stout HTTP/1.1
+
+### 2.10 Filtrar cervezas por país - España
+GET {{host}}/beer/filter/country?country=España HTTP/1.1
+
+### 2.11 Filtrar cervezas por país - Irlanda
+GET {{host}}/beer/filter/country?country=Irlanda HTTP/1.1
+
+### ============================================================
+### 3. UPDATE - ACTUALIZAR CERVEZAS (PUT)
+### ============================================================
+
+### 3.1 Actualizar cerveza 1 completamente
+PUT {{host}}/beer/1 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "Mahou Premium Plus",
+  "description": "Nueva descripción",
+  "abv": 5.2,
+  "style": "Pilsner",
+  "category": "Premium Plus",
+  "country": "España",
+  "ibu": 25,
+  "price": 2.99
+}
+
+### 3.2 Actualizar cerveza 2 (solo precio)
+PUT {{host}}/beer/2 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "price": 2.50
+}
+
+### 3.3 Actualizar cerveza inexistente
+PUT {{host}}/beer/999 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "price": 5.00
+}
+
+### ============================================================
+### 4. UPDATE - ACTUALIZAR CERVEZAS (PATCH)
+### ============================================================
+
+### 4.1 Actualizar cerveza 3 con PATCH (solo precio)
+PATCH {{host}}/beer/3 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "price": 2.55
+}
+
+### 4.2 Actualizar cerveza 4 con PATCH (múltiples campos)
+PATCH {{host}}/beer/4 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "abv": 4.3,
+  "ibu": 47,
+  "price": 3.75
+}
+
+### 4.3 Actualizar cerveza 5 con PATCH (nombre y descripción)
+PATCH {{host}}/beer/5 HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "name": "Corona Extra",
+  "description": "Cerveza mejicana de calidad"
+}
+
+### ============================================================
+### 5. DELETE - ELIMINAR CERVEZAS
+### ============================================================
+
+### 5.1 Eliminar cerveza 5
+DELETE {{host}}/beer/5 HTTP/1.1
+
+### 5.2 Obtener cerveza eliminada (debe devolver 404)
+GET {{host}}/beer/5 HTTP/1.1
+
+### 5.3 Eliminar cerveza inexistente
+DELETE {{host}}/beer/999 HTTP/1.1
+
+### 5.4 Obtener todas las cervezas (después de eliminar)
+GET {{host}}/beer HTTP/1.1
+
+### 5.5 Eliminar cerveza 1
+DELETE {{host}}/beer/1 HTTP/1.1
+
+### 5.6 Eliminar cerveza 2
+DELETE {{host}}/beer/2 HTTP/1.1
+
+### 5.7 Eliminar cerveza 3
+DELETE {{host}}/beer/3 HTTP/1.1
+
+### 5.8 Eliminar cerveza 4
+DELETE {{host}}/beer/4 HTTP/1.1
+
+### 5.9 Obtener todas las cervezas (debe estar vacío)
+GET {{host}}/beer HTTP/1.1
+
+### ============================================================
+### FLUJO COMPLETO DE PRUEBA
+### ============================================================
+### Ejecuta estas peticiones en orden:
+###
+### 1. Crea 5 cervezas (1.1 - 1.5)
+### 2. Obtén todas (2.1)
+### 3. Obtén una específica (2.2)
+### 4. Busca por nombre (2.6)
+### 5. Filtra por estilo (2.8)
+### 6. Actualiza con PUT (3.1)
+### 7. Actualiza con PATCH (4.1)
+### 8. Elimina una (5.1)
+### 9. Obtén todas de nuevo (5.4)
+###
+### ============================================================
